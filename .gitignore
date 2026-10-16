@@ -1,0 +1,12 @@
+# Sistema / SO
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+
+# Arquivo original de backup (opcional)
+# mimos_de_rainha_agendamento_online.html

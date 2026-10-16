@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin | Mimos de Rainha</title>
+  <meta name="description" content="Painel administrativo do Studio Mimos de Rainha - gerencie serviços, valores e profissionais.">
+  <meta name="robots" content="noindex">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/tailwind-config.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-pink-100 selection:text-pink-600">
+
+  <!-- ================= LOGIN ================= -->
+  <section id="login-view" class="flex-1 flex items-center justify-center p-4 bg-gradient-to-br from-purple-100 via-pink-50 to-rose-100">
+    <form id="login-form" class="bg-white rounded-3xl shadow-2xl border border-pink-100 w-full max-w-sm p-8 space-y-5 text-center">
+      <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-pink-200">
+        <i class="fa-solid fa-crown text-amber-200"></i>
+      </div>
+      <div>
+        <h1 class="font-serif font-bold text-2xl text-gray-800">Painel Admin</h1>
+        <p class="text-xs text-gray-500 mt-1">Mimos de Rainha • Acesso restrito</p>
+      </div>
+      <div class="relative">
+        <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-purple-400"></i>
+        <input id="login-password" type="password" placeholder="Digite a senha" autocomplete="current-password"
+               class="w-full pl-10 pr-4 py-3 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm">
+      </div>
+      <p id="login-error" class="hidden text-xs font-semibold text-red-500">Senha incorreta. Tente novamente.</p>
+      <button type="submit" id="btn-login" class="w-full py-3 gradient-btn text-white rounded-xl font-bold text-sm shadow-lg shadow-pink-200">
+        <i class="fa-solid fa-right-to-bracket mr-1.5"></i> Entrar
+      </button>
+      <a href="index.html" class="block text-xs text-purple-600 hover:text-purple-800 font-semibold">
+        <i class="fa-solid fa-arrow-left mr-1"></i> Voltar ao agendamento
+      </a>
+    </form>
+  </section>
+
+  <!-- ================= PAINEL ================= -->
+  <div id="panel-view" class="hidden flex-1 flex flex-col">
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur shadow-sm border-b border-pink-100">
+      <div class="gradient-header text-white text-xs py-1.5 px-4 text-center font-medium tracking-wide">
+        <i class="fa-solid fa-user-shield mr-1.5"></i> Área administrativa
+      </div>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center text-white shadow-md shadow-pink-200">
+            <i class="fa-solid fa-crown text-amber-200"></i>
+          </div>
+          <span class="font-serif font-bold text-xl bg-gradient-to-r from-purple-700 via-pink-600 to-rose-500 bg-clip-text text-transparent">Admin</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="index.html" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-purple-800 bg-purple-100 hover:bg-purple-200 transition-all">
+            <i class="fa-regular fa-eye mr-1"></i> Ver site
+          </a>
+          <button id="btn-logout" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all">
+            <i class="fa-solid fa-right-from-bracket mr-1"></i> Sair
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
+
+      <!-- Abas -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex gap-2">
+          <button id="tab-bookings" class="px-4 py-2 rounded-full text-sm font-semibold transition-all"><i class="fa-regular fa-calendar-check mr-1.5"></i> Agendamentos</button>
+          <button id="tab-services" class="px-4 py-2 rounded-full text-sm font-semibold transition-all"><i class="fa-solid fa-gem mr-1.5"></i> Serviços</button>
+          <button id="tab-professionals" class="px-4 py-2 rounded-full text-sm font-semibold transition-all"><i class="fa-solid fa-user-group mr-1.5"></i> Profissionais</button>
+          <button id="tab-settings" class="px-4 py-2 rounded-full text-sm font-semibold transition-all"><i class="fa-solid fa-gear mr-1.5"></i> Configurações</button>
+        </div>
+        <div class="flex gap-2">
+          <button id="btn-reset" class="px-3.5 py-2 rounded-full text-xs font-semibold text-gray-500 hover:text-red-600 hover:bg-red-50 border border-gray-200 transition-all">
+            <i class="fa-solid fa-rotate-left mr-1"></i> Restaurar padrão
+          </button>
+          <button id="btn-new" class="px-4 py-2 gradient-btn text-white rounded-full text-xs font-bold shadow-md shadow-pink-200">
+            <i class="fa-solid fa-plus mr-1"></i> <span id="btn-new-label">Novo serviço</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Agendamentos -->
+      <section id="section-bookings" class="space-y-4">
+        <div class="flex items-center justify-between gap-3">
+          <h1 class="text-2xl font-serif font-bold text-gray-800">Agendamentos</h1>
+          <button id="btn-refresh-bookings" class="px-3.5 py-2 rounded-full text-xs font-semibold text-purple-700 bg-purple-100 hover:bg-purple-200"><i class="fa-solid fa-rotate mr-1"></i> Atualizar</button>
+        </div>
+        <div id="bookings-list" class="space-y-3"></div>
+      </section>
+
+      <!-- Serviços -->
+      <section id="section-services" class="space-y-4">
+        <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+          <h1 class="text-2xl font-serif font-bold text-gray-800">Tipos de Serviço &amp; Valores</h1>
+          <div class="relative w-full sm:w-72">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-purple-400"></i>
+            <input id="search-services" type="text" placeholder="Buscar serviço..." class="w-full pl-10 pr-4 py-2 bg-white rounded-full border border-pink-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm shadow-sm">
+          </div>
+        </div>
+        <div id="services-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </section>
+
+      <!-- Profissionais -->
+      <section id="section-professionals" class="hidden space-y-4">
+        <h2 class="text-2xl font-serif font-bold text-gray-800">Profissionais</h2>
+        <div id="professionals-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+      </section>
+
+      <!-- Configurações -->
+      <section id="section-settings" class="hidden space-y-4 max-w-lg">
+        <h2 class="text-2xl font-serif font-bold text-gray-800">Configurações da Loja</h2>
+        <form id="form-settings" class="bg-white rounded-2xl p-6 border border-pink-100 shadow-sm space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1" for="set-whatsapp"><i class="fa-brands fa-whatsapp text-emerald-500 mr-1"></i> WhatsApp da loja *</label>
+            <input id="set-whatsapp" type="tel" inputmode="numeric" required placeholder="(51) 99999-9999" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm">
+            <p class="text-[11px] text-gray-400 mt-1.5">Para este número chegam as mensagens de agendamento. Informe DDD + número (o código do país 55 é adicionado automaticamente).</p>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs text-emerald-800 flex items-center justify-between gap-2">
+            <span>Link gerado: <strong id="set-whatsapp-link" class="break-all"></strong></span>
+          </div>
+          <button type="submit" class="w-full py-3 gradient-btn text-white rounded-xl text-sm font-bold shadow-md shadow-pink-200"><i class="fa-solid fa-floppy-disk mr-1.5"></i> Salvar configurações</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <!-- ================= MODAL SERVIÇO ================= -->
+  <div id="modal-service" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <form id="form-service" class="bg-white rounded-3xl w-full max-w-lg max-h-[92vh] overflow-y-auto p-6 shadow-2xl border border-pink-100 space-y-4 custom-scrollbar">
+      <h3 id="modal-service-title" class="font-serif font-bold text-xl text-gray-800">Novo serviço</h3>
+      <input type="hidden" id="svc-id">
+
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1" for="svc-name">Tipo de serviço *</label>
+        <input id="svc-name" type="text" required placeholder="Ex: Alongamento Postiça Realista" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm">
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1" for="svc-category">Categoria *</label>
+          <input id="svc-category" type="text" required list="category-options" placeholder="Ex: Unhas" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm">
+          <datalist id="category-options"></datalist>
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1" for="svc-price">Valor (R$) *</label>
+          <input id="svc-price" type="number" step="0.01" min="0" required placeholder="140,00" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1" for="svc-duration">Duração *</label>
+          <input id="svc-duration" type="text" required placeholder="Ex: 2h00 ou 45min" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1" for="svc-badge">Selo (opcional)</label>
+          <input id="svc-badge" type="text" placeholder="Ex: Mais Pedido" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1" for="svc-description">Descrição</label>
+        <textarea id="svc-description" rows="3" placeholder="Descreva o procedimento..." class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm"></textarea>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Ícone</label>
+        <div id="icon-picker" class="flex flex-wrap gap-2"></div>
+        <input type="hidden" id="svc-icon">
+      </div>
+
+      <div class="flex gap-2 pt-2">
+        <button type="button" data-close="modal-service" class="flex-1 py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:bg-gray-100 border border-gray-200">Cancelar</button>
+        <button type="submit" class="flex-1 py-2.5 gradient-btn text-white rounded-xl text-sm font-bold shadow-md shadow-pink-200"><i class="fa-solid fa-floppy-disk mr-1.5"></i> Salvar</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ================= MODAL PROFISSIONAL ================= -->
+  <div id="modal-professional" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <form id="form-professional" class="bg-white rounded-3xl w-full max-w-md p-6 shadow-2xl border border-pink-100 space-y-4">
+      <h3 id="modal-professional-title" class="font-serif font-bold text-xl text-gray-800">Nova profissional</h3>
+      <input type="hidden" id="pro-id">
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1" for="pro-name">Nome *</label>
+        <input id="pro-name" type="text" required class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm">
+      </div>
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1" for="pro-role">Especialidade *</label>
+        <input id="pro-role" type="text" required placeholder="Ex: Nail Designer Especialista" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm">
+      </div>
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1" for="pro-avatar-file">Foto da profissional</label>
+        <div class="flex items-center gap-4">
+          <img id="pro-avatar-preview" src="" alt="Pré-visualização" class="w-20 h-20 rounded-full object-cover border-2 border-pink-200 p-0.5 bg-pink-50">
+          <div class="flex-1">
+            <label for="pro-avatar-file" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 text-xs font-bold cursor-pointer border border-purple-200 transition-all">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Enviar imagem
+            </label>
+            <input id="pro-avatar-file" type="file" accept="image/*" class="hidden">
+            <p id="pro-avatar-name" class="text-[11px] text-gray-400 mt-1.5">JPG ou PNG. Será recortada em formato quadrado.</p>
+          </div>
+        </div>
+        <input id="pro-avatar" type="hidden">
+      </div>
+      <div class="flex gap-2 pt-2">
+        <button type="button" data-close="modal-professional" class="flex-1 py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:bg-gray-100 border border-gray-200">Cancelar</button>
+        <button type="submit" class="flex-1 py-2.5 gradient-btn text-white rounded-xl text-sm font-bold shadow-md shadow-pink-200"><i class="fa-solid fa-floppy-disk mr-1.5"></i> Salvar</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ================= TOAST ================= -->
+  <div id="admin-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-gray-900 text-white text-xs font-semibold px-5 py-3 rounded-full shadow-xl"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/admin.js"></script>
+  <script type="module" src="js/firebase.js"></script>
+</body>
+</html>
