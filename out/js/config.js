@@ -4,7 +4,7 @@
    3) Em "Origens JavaScript autorizadas" adicione: http://localhost:8080 (e o domínio final do site)
    4) Cole o Client ID abaixo. */
 window.MIMOS_CONFIG = {
-  GOOGLE_CLIENT_ID: '',   // ex: '1234567890-abc123.apps.googleusercontent.com'
+  GOOGLE_CLIENT_ID: '734126703234-2hrglk2nmd14mgiu1hhkg6b55ct66hm0.apps.googleusercontent.com',
 
   /* Envio de e-mail de recuperação de senha (EmailJS - gratuito):
      1) Crie conta em https://www.emailjs.com e adicione um "Email Service" (Gmail, Outlook...)

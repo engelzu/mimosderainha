@@ -10,3 +10,9 @@ Desktop.ini
 
 # Arquivo original de backup (opcional)
 # mimos_de_rainha_agendamento_online.html
+
+client_secret*.json
+*.json
+!package.json
+
+JULES_REPORT.md
